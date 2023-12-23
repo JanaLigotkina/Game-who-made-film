@@ -10,14 +10,13 @@ class Movie
   end
 
   def self.read_films_from_file(folder_name)
+    films = []
     file_names = Dir.glob("#{folder_name}/*")
 
-    films = []
     file_names.map do |file_name|
-      f = File.open(file_name, 'r:UTF-8')
+      f = File.open(file_name, 'r:UTF-8') if File.exist?(file_name)
       lines = f.readlines
-      film = self.new(lines[0], lines[1], lines[2])
-      films << film
+      films << self.new(lines[0], lines[1], lines[2])
     end
 
     films
